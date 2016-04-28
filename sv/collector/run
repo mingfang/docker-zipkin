@@ -1,11 +1,12 @@
 #!/bin/bash
 
-#sv start socklog-unix || exit 1
+sv start mysql || exit 1
 
 source /etc/envvars
+export MYSQL_USER=root
 env
 
 cd /zipkin
 
 exec 2>&1
-exec ./bin/collector
+exec ./bin/collector mysql
