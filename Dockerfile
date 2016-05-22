@@ -28,7 +28,7 @@ RUN wget http://dev.mysql.com/get/mysql-apt-config_0.7.2-1_all.deb && \
     apt-get update
 RUN apt-get install -y mysql-server
 
-RUN wget -O - https://github.com/openzipkin/zipkin/archive/1.39.7.tar.gz | tar zx
+RUN wget -O - https://github.com/openzipkin/zipkin/archive/1.40.1.tar.gz | tar zx
 RUN mv zipkin* zipkin
 RUN cd zipkin && \
     ./gradlew assemble
