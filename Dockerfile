@@ -22,27 +22,14 @@ RUN add-apt-repository ppa:webupd8team/java -y && \
     apt-get install -y oracle-java8-installer
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
-#MySQL
-RUN wget http://dev.mysql.com/get/mysql-apt-config_0.7.2-1_all.deb && \
-    dpkg -i *.deb && \
-    apt-get update
-RUN apt-get install -y mysql-server
+RUN wget -O - http://archive.apache.org/dist/cassandra/3.5/apache-cassandra-3.5-bin.tar.gz | tar zx
 
 RUN wget -O - https://github.com/openzipkin/zipkin/archive/1.40.1.tar.gz | tar zx
 RUN mv zipkin* zipkin
 RUN cd zipkin && \
     ./gradlew assemble
 
-#configuration
-RUN sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
-COPY custom.cnf /etc/mysql/conf.d/
-
-#data
-COPY mysql.ddl /
-RUN mysqld_safe & mysqladmin --wait=5 ping && \
-    mysql < mysql.ddl && \
-    mysql -uroot -Dzipkin < /zipkin/zipkin-anormdb/src/main/resources/mysql.sql && \
-    mysqladmin shutdown
+RUN mv *cassandra* cassandra && mkdir -p /cassandra/{logs,data}
 
 # Add runit services
 COPY sv /etc/service 

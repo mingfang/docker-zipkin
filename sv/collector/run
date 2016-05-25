@@ -1,12 +1,11 @@
 #!/bin/bash
 
-sv start mysql || exit 1
+sv start cassandra || exit 1
 
 source /etc/envvars
-export MYSQL_USER=root
 env
 
 cd /zipkin
 
 exec 2>&1
-exec ./bin/collector mysql
+exec ./bin/collector cassandra
