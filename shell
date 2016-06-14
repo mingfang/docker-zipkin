@@ -1,4 +1,4 @@
 #!/bin/bash
 source helper
 
-docker run -p 8081:8080 -v `pwd`:/docker -w /docker --rm -it ${IMAGE} /bin/bash
+docker run -p 9411:9411 -v `pwd`:/docker -w /docker --rm -it ${IMAGE} /bin/bash

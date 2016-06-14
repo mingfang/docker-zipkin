@@ -1,0 +1,12 @@
+#!/bin/bash
+
+sv start cassandra || exit 1
+
+source /etc/envvars
+env
+
+STORAGE_TYPE=cassandra
+KAFKA_ZOOKEEPER=zookeeper:2181
+
+exec 2>&1
+exec java -jar /zipkin.jar

@@ -5,7 +5,6 @@
 source /etc/envvars
 env
 
-cd /zipkin
 
 exec 2>&1
-exec ./bin/web
+exec /cassandra/bin/cassandra -fR

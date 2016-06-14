@@ -25,10 +25,12 @@ RUN add-apt-repository ppa:webupd8team/java -y && \
     apt-get install -y oracle-java8-installer
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
-RUN wget -O - https://github.com/openzipkin/zipkin/archive/1.40.1.tar.gz | tar zx
-RUN mv zipkin* zipkin
-RUN cd zipkin && \
-    ./gradlew assemble
+#cassandra
+RUN wget -O - http://archive.apache.org/dist/cassandra/3.5/apache-cassandra-3.5-bin.tar.gz | tar zx
+RUN mv *cassandra* cassandra && mkdir -p /cassandra/{logs,data}
+
+#zipkin
+RUN wget -O zipkin.jar 'https://search.maven.org/remote_content?g=io.zipkin.java&a=zipkin-server&v=LATEST&c=exec'
 
 # Add runit services
 COPY sv /etc/service 
